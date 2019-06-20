@@ -7,7 +7,7 @@ import {Router} from '@angular/router';
 @Injectable()
 export class AuthService {
   authChange = new Subject<boolean>();
-  private user: User;
+  private user: User = null;
 
   constructor(private router: Router) {
   }
