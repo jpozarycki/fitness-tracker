@@ -11,7 +11,7 @@ import {
   MatListModule,
   MatNativeDateModule,
   MatSelectModule,
-  MatSidenavModule,
+  MatSidenavModule, MatSortModule,
   MatTableModule,
   MatTabsModule,
   MatToolbarModule
@@ -33,7 +33,8 @@ import {
     MatCardModule,
     MatSelectModule,
     MatDialogModule,
-    MatTableModule
+    MatTableModule,
+    MatSortModule
   ],
   exports: [
     MatButtonModule,
@@ -50,7 +51,8 @@ import {
     MatCardModule,
     MatSelectModule,
     MatDialogModule,
-    MatTableModule
+    MatTableModule,
+    MatSortModule
   ]
 })
 export class MaterialModule {
