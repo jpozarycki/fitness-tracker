@@ -28,7 +28,6 @@ export class AuthService {
     this.authSuccessfully();
   }
 
-
   logout() {
     this.user = null;
     this.authChange.next(false);
@@ -36,7 +35,7 @@ export class AuthService {
   }
 
   getUser() {
-    return { ...this.user };
+    return {...this.user};
   }
 
   isAuth() {
