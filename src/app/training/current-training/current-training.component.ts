@@ -1,18 +1,21 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, OnDestroy, OnInit, Output} from '@angular/core';
 import {MatDialog} from '@angular/material';
 import {StopTrainingComponent} from './stop-training.component';
+import {TrainingService} from '../training.service';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-current-training',
   templateUrl: './current-training.component.html',
   styleUrls: ['./current-training.component.css']
 })
-export class CurrentTrainingComponent implements OnInit {
+export class CurrentTrainingComponent implements OnInit, OnDestroy {
   @Output() trainingExit = new EventEmitter<void>();
   progress = 0;
   timer: number;
+  exercise$ = new Subscription();
 
-  constructor(private dialog: MatDialog) {
+  constructor(private dialog: MatDialog, private trainingService: TrainingService) {
   }
 
   ngOnInit() {
@@ -20,12 +23,13 @@ export class CurrentTrainingComponent implements OnInit {
   }
 
   private startOrResumeTimer() {
+    const step = this.trainingService.getRunningExercise().duration / 100 * 1000;
     this.timer = setInterval(() => {
       this.progress = this.progress + 1;
       if (this.progress >= 100) {
         clearInterval(this.timer);
       }
-    }, 30);
+    }, step);
   }
 
   onStop() {
@@ -38,10 +42,14 @@ export class CurrentTrainingComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.trainingExit.emit();
+        this.trainingService.exerciseChange.next(null);
       } else {
         this.startOrResumeTimer();
       }
     });
+  }
+
+  ngOnDestroy(): void {
+    this.exercise$.unsubscribe();
   }
 }
