@@ -13,13 +13,16 @@ import {PastTrainingsComponent} from './training/past-trainings/past-trainings.c
 import {WelcomeComponent} from './welcome/welcome.component';
 import {FlexLayoutModule} from '@angular/flex-layout';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import { HeaderComponent } from './navigation/header/header.component';
-import { SidenavListComponent } from './navigation/sidenav-list/sidenav-list.component';
+import {HeaderComponent} from './navigation/header/header.component';
+import {SidenavListComponent} from './navigation/sidenav-list/sidenav-list.component';
 import {MatProgressSpinnerModule} from '@angular/material';
 import {StopTrainingComponent} from './training/current-training/stop-training.component';
 import {AuthService} from './auth/auth.service';
 import {RouterModule, Routes} from '@angular/router';
 import {AuthGuard} from './auth/auth.guard';
+import {AngularFireModule} from '@angular/fire';
+import {environment} from '../environments/environment';
+import {AngularFirestoreModule} from '@angular/fire/firestore';
 
 const routes: Routes = [
   {path: '', component: WelcomeComponent},
@@ -43,6 +46,8 @@ const routes: Routes = [
     StopTrainingComponent
   ],
   imports: [
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFirestoreModule,
     BrowserModule,
     BrowserAnimationsModule,
     MaterialModule,
