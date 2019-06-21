@@ -23,6 +23,7 @@ import {AuthGuard} from './auth/auth.guard';
 import {AngularFireModule} from '@angular/fire';
 import {environment} from '../environments/environment';
 import {AngularFirestoreModule} from '@angular/fire/firestore';
+import {AngularFireAuthModule} from '@angular/fire/auth';
 
 const routes: Routes = [
   {path: '', component: WelcomeComponent},
@@ -48,6 +49,7 @@ const routes: Routes = [
   imports: [
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
+    AngularFireAuthModule,
     BrowserModule,
     BrowserAnimationsModule,
     MaterialModule,

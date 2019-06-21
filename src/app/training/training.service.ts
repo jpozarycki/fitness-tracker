@@ -9,10 +9,10 @@ import {AngularFirestore} from '@angular/fire/firestore';
 })
 export class TrainingService {
   exerciseChange = new Subject<Exercise>();
+  exercisesChange = new Subject<Exercise[]>();
+  finishedExercisesChange = new Subject<Exercise[]>();
   private availableExercises: Exercise[] = [];
   private runningExercise: Exercise;
-  private exercises: Exercise[] = [];
-  exercisesChange = new Subject<Exercise[]>();
 
   constructor(private db: AngularFirestore) {
   }
@@ -36,24 +36,26 @@ export class TrainingService {
         }
       ))
       .subscribe((exercises: Exercise[]) => {
+        console.log(exercises);
         this.availableExercises = exercises;
         this.exercisesChange.next([...this.availableExercises]);
       });
   }
 
   startExercise(selectedId: string) {
+    // this.db.doc('availableExercises/' + selectedId).update({lastSelected: new Date()});
     this.runningExercise = this.availableExercises.find(exercise => exercise.id === selectedId);
     this.exerciseChange.next({...this.runningExercise});
   }
 
   completeExercise() {
-    this.exercises.push({...this.runningExercise, date: new Date(), state: 'completed'});
+    this.addDataToDatabase({...this.runningExercise, date: new Date(), state: 'completed'});
     this.runningExercise = null;
     this.exerciseChange.next(null);
   }
 
   cancelExercise(progress: number) {
-    this.exercises.push({
+    this.addDataToDatabase({
       ...this.runningExercise,
       duration: this.runningExercise.duration * (progress / 100),
       calories: this.runningExercise.calories * (progress / 100),
@@ -68,8 +70,15 @@ export class TrainingService {
     return {...this.runningExercise};
   }
 
-  getCompletedOrCanceledExercises() {
-    return this.exercises.slice();
+  fetchFinishedExercises() {
+    this.db.collection('finishedExercises').valueChanges().subscribe((exercises: Exercise[]) => {
+      this.finishedExercisesChange.next(exercises);
+    });
   }
+
+  private addDataToDatabase(exercise: Exercise) {
+    this.db.collection('finishedExercises').add(exercise);
+  }
+
 }
 
