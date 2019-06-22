@@ -7,23 +7,17 @@ import {MaterialModule} from './material.module';
 import {SignupComponent} from './auth/signup/signup.component';
 import {LoginComponent} from './auth/login/login.component';
 import {TrainingComponent} from './training/training.component';
-import {CurrentTrainingComponent} from './training/current-training/current-training.component';
-import {NewTrainingComponent} from './training/new-training/new-training.component';
-import {PastTrainingsComponent} from './training/past-trainings/past-trainings.component';
 import {WelcomeComponent} from './welcome/welcome.component';
 import {FlexLayoutModule} from '@angular/flex-layout';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HeaderComponent} from './navigation/header/header.component';
 import {SidenavListComponent} from './navigation/sidenav-list/sidenav-list.component';
-import {MatProgressSpinnerModule} from '@angular/material';
-import {StopTrainingComponent} from './training/current-training/stop-training.component';
 import {AuthService} from './auth/auth.service';
 import {RouterModule, Routes} from '@angular/router';
 import {AuthGuard} from './auth/auth.guard';
 import {AngularFireModule} from '@angular/fire';
 import {environment} from '../environments/environment';
-import {AngularFirestoreModule} from '@angular/fire/firestore';
-import {AngularFireAuthModule} from '@angular/fire/auth';
+import {AuthModule} from './auth/auth.module';
+import {TrainingModule} from './training/training.module';
 
 const routes: Routes = [
   {path: '', component: WelcomeComponent},
@@ -35,33 +29,22 @@ const routes: Routes = [
 @NgModule({
   declarations: [
     AppComponent,
-    SignupComponent,
-    LoginComponent,
-    TrainingComponent,
-    CurrentTrainingComponent,
-    NewTrainingComponent,
-    PastTrainingsComponent,
     WelcomeComponent,
     HeaderComponent,
-    SidenavListComponent,
-    StopTrainingComponent
+    SidenavListComponent
   ],
   imports: [
     AngularFireModule.initializeApp(environment.firebase),
-    AngularFirestoreModule,
-    AngularFireAuthModule,
     BrowserModule,
     BrowserAnimationsModule,
+    RouterModule.forRoot(routes),
+    AuthModule,
+    TrainingModule,
     MaterialModule,
-    FlexLayoutModule,
-    FormsModule,
-    ReactiveFormsModule,
-    MatProgressSpinnerModule,
-    RouterModule.forRoot(routes)
+    FlexLayoutModule
   ],
   providers: [AuthService, AuthGuard],
-  bootstrap: [AppComponent],
-  entryComponents: [StopTrainingComponent]
+  bootstrap: [AppComponent]
 })
 export class AppModule {
 }
