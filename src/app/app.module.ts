@@ -19,7 +19,7 @@ import {environment} from '../environments/environment';
 import {AuthModule} from './auth/auth.module';
 import {TrainingModule} from './training/training.module';
 import {StoreModule} from '@ngrx/store';
-import {appReducer} from './app.reducer';
+import {reducers} from './app.reducer';
 
 const routes: Routes = [
   {path: '', component: WelcomeComponent},
@@ -44,7 +44,7 @@ const routes: Routes = [
     TrainingModule,
     MaterialModule,
     FlexLayoutModule,
-    StoreModule.forRoot({ui: appReducer})
+    StoreModule.forRoot(reducers)
   ],
   providers: [AuthService, AuthGuard],
   bootstrap: [AppComponent]
