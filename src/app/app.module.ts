@@ -18,6 +18,8 @@ import {AngularFireModule} from '@angular/fire';
 import {environment} from '../environments/environment';
 import {AuthModule} from './auth/auth.module';
 import {TrainingModule} from './training/training.module';
+import {StoreModule} from '@ngrx/store';
+import {appReducer} from './app.reducer';
 
 const routes: Routes = [
   {path: '', component: WelcomeComponent},
@@ -41,7 +43,8 @@ const routes: Routes = [
     AuthModule,
     TrainingModule,
     MaterialModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    StoreModule.forRoot({ui: appReducer})
   ],
   providers: [AuthService, AuthGuard],
   bootstrap: [AppComponent]
