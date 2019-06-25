@@ -14,10 +14,8 @@ import * as Training from './training.actions';
   providedIn: 'root'
 })
 export class TrainingService {
-  exerciseChange = new Subject<Exercise>();
   exercisesChange = new Subject<Exercise[]>();
   finishedExercisesChange = new Subject<Exercise[]>();
-  private availableExercises: Exercise[] = [];
   private runningExercise: Exercise;
   private fbSubs: Subscription[] = [];
 
@@ -48,9 +46,9 @@ export class TrainingService {
         console.log(exercises);
         this.store.dispatch(new UI.StopLoading());
         this.store.dispatch(new Training.SetAvailableExercises(exercises));
-      }, error => {
+      }, () => {
         this.store.dispatch(new UI.StopLoading());
-        this.uiService.showSnackbar('Fetching excersises failed. Please, try again later', null, 3000);
+        this.uiService.showSnackbar('Fetching exercises failed. Please, try again later', null, 3000);
         this.exercisesChange.next(null);
       }));
   }
