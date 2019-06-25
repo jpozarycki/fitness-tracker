@@ -1,4 +1,4 @@
-import {ActivatedRouteSnapshot, CanActivate, Route, RouterStateSnapshot, UrlTree} from '@angular/router';
+import {ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot, UrlTree} from '@angular/router';
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
 import * as fromRoot from '../app.reducer';
@@ -14,10 +14,4 @@ export class AuthGuard implements CanActivate {
     Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     return this.store.select(fromRoot.getIsAuthenticated).pipe(take(1));
   }
-
-  canLoad(route: Route) {
-    return this.store.select(fromRoot.getIsAuthenticated).pipe(take(1));
-  }
-
-
 }

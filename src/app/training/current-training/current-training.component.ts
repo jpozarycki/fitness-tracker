@@ -1,8 +1,7 @@
-import {Component, EventEmitter, OnDestroy, OnInit, Output} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {MatDialog} from '@angular/material';
 import {StopTrainingComponent} from './stop-training.component';
 import {TrainingService} from '../training.service';
-import {Subscription} from 'rxjs';
 import {Store} from '@ngrx/store';
 import * as fromTraining from '../training.reducer';
 import {take} from 'rxjs/operators';
@@ -12,11 +11,9 @@ import {take} from 'rxjs/operators';
   templateUrl: './current-training.component.html',
   styleUrls: ['./current-training.component.css']
 })
-export class CurrentTrainingComponent implements OnInit, OnDestroy {
-  @Output() trainingExit = new EventEmitter<void>();
+export class CurrentTrainingComponent implements OnInit {
   progress = 0;
   timer: number;
-  exercise$ = new Subscription();
 
   constructor(private dialog: MatDialog, private trainingService: TrainingService, private store: Store<fromTraining.State>) {
   }
@@ -55,7 +52,4 @@ export class CurrentTrainingComponent implements OnInit, OnDestroy {
     });
   }
 
-  ngOnDestroy(): void {
-    this.exercise$.unsubscribe();
-  }
 }
