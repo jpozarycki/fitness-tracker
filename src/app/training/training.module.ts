@@ -6,6 +6,8 @@ import {PastTrainingsComponent} from './past-trainings/past-trainings.component'
 import {StopTrainingComponent} from './current-training/stop-training.component';
 import {SharedModule} from '../shared/shared.module';
 import {AngularFirestoreModule} from '@angular/fire/firestore';
+import {StoreModule} from '@ngrx/store';
+import {trainingReducer} from './training.reducer';
 
 @NgModule({
   declarations: [
@@ -17,7 +19,8 @@ import {AngularFirestoreModule} from '@angular/fire/firestore';
   ],
   imports: [
     AngularFirestoreModule,
-    SharedModule
+    SharedModule,
+    StoreModule.forFeature('training', trainingReducer)
   ],
   entryComponents: [StopTrainingComponent]
 })

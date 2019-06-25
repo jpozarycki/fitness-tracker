@@ -9,17 +9,23 @@ export const STOP_EXERCISE = '[Training] Stop Exercise';
 export class SetAvailableExercises implements Action {
   readonly type = SET_AVAILABLE_EXERCISES;
 
-  constructor(public payload: Exercise[]) {}
+  constructor(public payload: Exercise[]) {
+  }
 }
 
 export class SetFinishedExercises implements Action {
   readonly type = SET_FINISHED_EXERCISES;
 
-  constructor(public payload: Exercise[]) {}
+  constructor(public payload: Exercise[]) {
+  }
 }
 
 export class StartExercise implements Action {
   readonly type = START_EXERCISE;
+
+  constructor(public payload: string) {
+  }
+
 }
 
 export class StopExercise implements Action {
